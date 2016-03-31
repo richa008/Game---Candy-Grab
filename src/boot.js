@@ -1,8 +1,8 @@
 var Candy = {};
 
-Candy.boot = function(game){};
+Candy.Bootoot = function(game){};
 
-Candy.boot.prototype = {
+Candy.Boot.prototype = {
     //Preload and create are reserved names for functions in Phaser. create() is called after preload()
     preload: function(){
         this.load.image('preloaderBar', 'img/loading-bar.png');
