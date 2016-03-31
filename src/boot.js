@@ -1,6 +1,6 @@
 var Candy = {};
 
-Candy.Bootoot = function(game){};
+Candy.Boot = function(game){};
 
 Candy.Boot.prototype = {
     //Preload and create are reserved names for functions in Phaser. create() is called after preload()
