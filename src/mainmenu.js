@@ -8,7 +8,7 @@ Candy.MainMenu.prototype = {
         //function to be called onClick - this.startGame
         //context in which the function is to be executed
         // 1, 0, 2 are the images in the start-button sprite. onHover, normal and onTouch respectively
-        this.add.button(Candy.GAME_WIDTH - 411, Candy.GAME_HEIGHT - 153, 'button-start', this.startGame, this, 1, 0, 2);
+        this.add.button(Candy.GAME_WIDTH/2 - 200, Candy.GAME_HEIGHT/2 - 200, 'button-start', this.startGame, this, 1, 0, 2);
 
     },
     startGame: function(){

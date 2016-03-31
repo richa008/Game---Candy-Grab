@@ -3,7 +3,7 @@ Candy.Game = function(game){
     this.spawnCandyTimer = 0;
     Candy.scoreText = null; //Can be used in other states and objects
     Candy.score = 0;
-    Candy.health = 0;
+    Candy.lives = 3;
 };
 
 Candy.Game.prototype = {   
@@ -14,15 +14,20 @@ Candy.Game.prototype = {
         this.add.sprite(10, 5, 'score-bg');
         this.add.button(Candy.GAME_WIDTH - 106, 5, 'button-pause', this.managePause, this);        
         this.spawnCandyTimer = 0;
-        Candy.health = 10; 
-        this.fontStyle = { font: "40px Arial", fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
-        Candy.scoreText = this.add.text(120, 20, "0", this.fontStyle);        
+        
+        this.fontStyle = { fill: "#663300", stroke: "#333", strokeThickness: 1, align: "center" };
+        var scoreStyle = { fill: "#FFCC00", stroke: "#333", strokeThickness: 5, align: "center" };
+        
+        Candy.scoreText = this.add.text(120, 20, "0", scoreStyle);     
+        Candy.livesText = this.add.text(260, 20, "Lives : ", this.fontStyle);
+        Candy.livesNumberText = this.add.text(350, 20, Candy.lives, this.fontStyle);
+        
         this.candyGroup = this.add.group();
         Candy.item.spawnCandy(this);
     },
     managePause: function(){        
         this.game.paused = true; //Everything is frozen until paused is set to true
-        var pausedText = this.add.text(100, 250, "Game paused,\n Click anywhere to continue..", this.fontStyle);
+        var pausedText = this.add.text(150, 350, "Game paused,\n Click anywhere to continue..", this.fontStyle);
         this.input.onDown.add(function(){
             pausedText.destroy();
             this.game.paused = false;
@@ -37,9 +42,13 @@ Candy.Game.prototype = {
         this.candyGroup.forEach(function(candy){
            candy.angle += candy.rotateMe; 
         });
-        if(Candy.health <= 0){
+        if(Candy.lives <= 0){
             this.game.paused = true;
-            var gameOverText = this.add.text(100, 250, "Sorry.. Game Over", this.fontStyle);
+            Candy.gameOverText = this.add.text(200, 350, "Sorry.. Game Over", this.fontStyle);
+        }
+        if(Candy.score == 10){
+            Candy.gameOverText = this.add.text(100, 350, "You grabbed " + Candy.score + " candies.. You won", this.fontStyle);
+            this.game.paused = true;
         }
     }
 };
@@ -69,7 +78,8 @@ Candy.item = {
         Candy.scoreText.setText(Candy.score);
     },
     removeCandy: function(candy){
-         candy.kill();
-        Candy.health -= 10;
+        candy.kill();
+        Candy.lives -= 1;
+        Candy.livesNumberText.setText(Candy.lives);
     }    
 };
